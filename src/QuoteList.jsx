@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import Quote from "./Quote"
 import axios from 'axios'
+import QuoteListItem from "./QuoteListItem"
 
 
 const initialList = [
@@ -47,19 +48,17 @@ export default function QuoteList() {
         setIsSaved(!isSaved)
     }
 
+    const deleteFromQuoteList = (idx) => {
+        setQuoteList((currQuoteList) => {
+            return currQuoteList.filter((quoteListItem, i) => i !== idx)
+        })
+    }
+
     return (
         <div>
             <Quote quote={quote} getNext={getNext} saveQuoteToList={saveQuoteToList}/>
-            <h2 className=" text-3xl font-thin my-10">Saved Quotes</h2>
-            <ul>
-                {quoteList.map(q => (
-                    <li>
-                        <p>{q.q}</p>
-                        <strong>- {q.a}</strong>
-                    </li>
-                ))}
-            </ul>
-
+            <h2 className="text-3xl font-thin my-10">Saved Quotes</h2>
+            <QuoteListItem quoteList={quoteList} handleClick={deleteFromQuoteList}/>
         </div>
         
     )
